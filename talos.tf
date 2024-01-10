@@ -27,6 +27,28 @@ locals {
           port    = 7445
         }
       }
+      pods = [
+        {
+          apiVersion = "v1"
+          kind       = "Pod"
+          metadata = {
+            name      = "tftpd"
+            namespace = "kube-system"
+            labels = {
+              role = "tftpd"
+            }
+          }
+          spec = {
+            hostNetwork = true
+            containers = [
+              {
+                name  = "tftpd"
+                image = "docker.io/taskinen/tftp:latest"
+              },
+            ]
+          }
+        },
+      ]
     }
     cluster = {
       # see https://www.talos.dev/v1.6/talos-guides/discovery/
